@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Calendar 02</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style_custom.css">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+</head>
+<body>
+
+
+  
+
+
+<section id="calendario_planejamento" class="ftco-section">
+
+    <header>
+        <h1>Planejamento autores do dia</h1>
+    </header>
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="elegant-calencar d-md-flex">
+                    <div class="wrap-header d-flex align-items-center">
+                      <p id="reset"></p>
+                      <div id="header" class="p-0">
+                        <div class="pre-button d-flex align-items-center justify-content-center"><i class="fa fa-chevron-left"></i></div>
+                        <div class="head-info">
+                            <div class="head-day"></div>
+                            <div class="head-month"></div>
+                            <div class="mesSelecionado"></div>
+                        </div>
+                        <div class="next-button d-flex align-items-center justify-content-center"><i class="fa fa-chevron-right"></i></div>
+                    </div>
+                </div>
+                <div class="calendar-wrap">
+                    <table id="calendar">
+                        <thead>
+                            <tr>
+                                <th>Sun</th>
+                                <th>Mon</th>
+                                <th>Tue</th>
+                                <th>Wed</th>
+                                <th>Thu</th>
+                                <th>Fri</th>
+                                <th>Sat</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                          </tr>
+                          <tr>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                          </tr>
+                          <tr>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                          </tr>
+                          <tr>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                          </tr>
+                          <tr>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                          </tr>
+                          <tr>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                          </tr>
+                      </tbody>
+                  </table>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+</section>
+
+<section id="section-author-selected">
+
+    <h2 id="title-selected">Destaque</h2>
+    <div id="div-author-born">
+     <h3 id="title-author-born"><img src="images/cake2.svg" style="font-size: 2rem; color: cornflowerblue;" alt="Bootstrap" width="32" height="32">  AutorDestaque - ANO</h3>
+
+
+ </div>
+
+</section>
+
+
+<section id="section-born-deceased-list">
+    <h2 id="title-authors-born">Autores Nascidos</h2>
+    <!-- Adicione aqui o código para a lista paginada de autores nascidos -->
+    <div id="lista_autores_nascidos"></div>
+</section>
+
+
+<script src="js/jquery.min.js"></script>
+<script src="js/popper.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/main.js"></script>
+
+
+
+  <script>
+
+/**********LISTA POR DAATA*************/
+
+ var autores = [
+        { nome: "Ingmar Bergman", diaNascimento: 1, mesNascimento: 5, anoNascimento: 1990, diaFalecimento: 0, mesFalecimento: 0, anoFalecimento: 0 },
+        { nome: "Pedro Almodóvar", diaNascimento: 5, mesNascimento: 5, anoNascimento: 1985, diaFalecimento: 10, mesFalecimento: 5, anoFalecimento: 2010 },
+        { nome: "Tom Cruise", diaNascimento: 5, mesNascimento: 5, anoNascimento: 1995, diaFalecimento: 0, mesFalecimento: 0, anoFalecimento: 0 },
+        { nome: "Ben Stiler", diaNascimento: 10, mesNascimento: 1, anoNascimento: 1978, diaFalecimento: 15, mesFalecimento: 1, anoFalecimento: 2015 }
+        // Adicione mais autores e seus dias e meses de nascimento conforme necessário
+    ];
+
+
+    function get_autores(dia, mes, autores) {
+
+
+//alert(dia + mes);
+    if (dia < 1 || dia > 31 || mes < 1 || mes > 12) {
+        return [["Data inválida"]];
+    }
+
+  
+
+    var autoresNoDiaMes = [];
+
+    // Percorrer todos os autores e encontrar aqueles que nasceram na data fornecida
+    autores.forEach(function(autor) {
+        if (autor.diaNascimento === dia && autor.mesNascimento === mes) {
+            autoresNoDiaMes.push(autor);
+        }
+    });
+
+    // Verificar se foram encontrados autores para a data fornecida
+    if (autoresNoDiaMes.length > 0) {
+        return autoresNoDiaMes.map(function(autor) {
+            return [autor.nome, autor.anoNascimento];
+        });
+    } else {
+        return [["Nenhum autor encontrado para esta data", "Não há registros"]];
+    }
+}
+
+
+// Função que é chamada quando um botão é clicado
+function diaSelecionado(diaHead, mesHead) {
+    var dia = parseInt(diaHead); // Usar o dia fornecido pela classe 'head-day'
+    var mes = parseInt(mesHead); // Usar o mês fornecido pela classe 'head-month'
+
+    // Chama a função get_autores e passa os valores do dia e do mês como argumentos
+    var resultados = get_autores(dia, mes, autores);
+
+    // Limpa a lista de autores nascidos antes de adicionar novos
+    document.getElementById("lista_autores_nascidos").innerHTML = "";
+
+    // Exibe os resultados
+    resultados.forEach(function(resultado) {
+        // Cria um novo elemento de lista
+        var novoAutor = document.createElement("li");
+        
+        // Define o texto do elemento com base nos resultados
+        novoAutor.textContent = resultado[0] + ", (" +  resultado[1] + ")";
+        
+        // Adiciona o novo elemento à lista de autores nascidos
+        document.getElementById("lista_autores_nascidos").appendChild(novoAutor);
+
+       //console.log("Nome do autor:", resultado[0]);
+        //console.log("Ano de nascimento:", resultado[1]);
+        //console.log("---");
+    });
+
+}
+
+
+// Seleciona a div alvo
+var minhaDiv = document.querySelector('.head-info');
+
+// Cria um novo observador de mutação
+var observer = new MutationObserver(function(mutationsList, observer) {
+    // Itera sobre as mutações
+    for (var mutation of mutationsList) {
+        // Verifica se a mutação é de tipo childList (ou seja, conteúdo interno alterado)
+        if (mutation.type === 'childList') {
+            // Dispara um evento personalizado 'conteudoModificado' após a mutação
+            var evento = new CustomEvent('conteudoModificado');
+            minhaDiv.dispatchEvent(evento);
+            break; // Saímos do loop, pois apenas uma mutação é necessária
+        }
+    }
+});
+
+// Configura o observador de mutação para observar mudanças na lista de filhos da div e em outras propriedades, se necessário
+observer.observe(minhaDiv, { childList: true, subtree: true, attributes: true, characterData: true });
+
+// Adiciona um ouvinte de evento para detectar quando o conteúdo da div é modificado
+minhaDiv.addEventListener('conteudoModificado', function(event) {
+    console.log('Conteúdo da div ou de um de seus filhos foi modificado!');
+    // Obtém os valores dos elementos com as classes 'head-day' e 'head-month'
+    var diaHead = parseInt(document.querySelector('.head-day').textContent);
+    var mesHead = parseInt(document.querySelector('.mesSelecionado').textContent);
+    // Chama a função diaSelecionado com os valores do dia e do mês como argumentos
+    diaSelecionado(diaHead, mesHead);
+});
+
+
+
+
+/***************AUTORES DESTACADOS*******************/
+
+
+
+
+
+
+
+
+
+
+
+</script>
+
+
+
+
+
+
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,19 @@
+body{
+    text-align: center;
+
+}
+section, .ftco-section{
+
+    margin: 0 auto;
+    background-color: darkorange;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+h1,h2,h3 {
+    color: whitesmoke;
+}
+
+.mesSelecionado{
+    display: none;
+}
