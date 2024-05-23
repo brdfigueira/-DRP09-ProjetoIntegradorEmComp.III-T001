@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Calendar 02</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style_custom.css">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+</head>
+<body>
+
+
+
+    <div class="container">
+        <div class="header">
+           
+                <div class="logo-container"> 
+                    <a href="Visitante_index.html"> 
+                    <div class="logo">    <img class="logo" src="images/home.png" alt="Imagem de destaque">
+
+             
+
+                    </div></a> 
+                </div>
+    </div>
+<div class="highlight-title">Quiz</div>
+                <div class="title-container">
+                    <div class="title autor_do_dia">Miguel de Cervantes</div>
+
+                </div>
+   
+           
+    
+
+        <div class="image-container">
+            <img class="image" src="images/cervantes.png" alt="Imagem de destaque">
+        </div>
+
+        <div class="tituloquiz">
+            <div class="highlight-title">Qual título pertence a esse autor?</div>
+
+        </div>
+
+        <div class="quiz">
+            <!-- Adicione este modal ao seu HTML -->
+<div id="modal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <div class="quote"></div>
+        <br>
+        <button class="compartilhar">Compartilhar</button>
+    </div>
+</div>
+
+
+            <div class="option option1">
+                <div class="icon-option">
+                    <div class="icon">📘</div>
+                </div>
+                <div class="titulo_livro">A Pícara Justina</div><div class="ano">(1605)</div>
+            </div>
+
+
+            <div class="option option2">
+                <div class="icon-option">
+                    <div class="icon">📘</div>
+                </div>
+                <div class="titulo_livro">Dom Quixote</div><div class="ano">(1605)</div>
+            </div>
+
+
+            <div class="option option3">
+                <div class="icon-option">
+                    <div class="icon">📘</div>
+                </div>
+                <div class="titulo_livro">Fuenteovejuna</div><div class="ano">(1619)</div>
+            </div>
+
+
+            <div class="option option4">
+                <div class="icon-option">
+                    <div class="icon">📘</div>
+                </div>
+                <div class="titulo_livro">La Celestina</div><div class="ano"> (1499)</div>
+            </div>
+
+        </div>
+
+
+
+    </div>
+
+<script>
+    
+
+var livros = [
+    { titulo: "A Pícara Justina", ano: 1605, autor: "Anônimo" },
+    { titulo: "Dom Quixote", ano: 1605, autor: "Miguel de Cervantes" },
+    { titulo: "Fuenteovejuna", ano: 1619, autor: "Lope de Vega" },
+    { titulo: "La Celestina", ano: 1499, autor: "Fernando de Rojas" }
+];
+
+
+
+// Função para abrir o modal com o quote
+function abrirModal(quote) {
+    const modal = document.getElementById('modal');
+    const quoteContainer = modal.querySelector('.quote');
+    const compartilharButton = modal.querySelector('.compartilhar');
+
+    // Define o quote no modal
+    quoteContainer.textContent = quote;
+
+    // Adiciona evento de clique ao botão de compartilhar
+    compartilharButton.onclick = function() {
+        // Aqui você pode adicionar a lógica para compartilhar
+        // Por exemplo, abrir uma janela de compartilhamento
+        // Exemplo de uso
+const mensagem = "Você conhece os livros de Miguel de Cervantes? Conheça em www.quizclassico.com.br";
+compartilharNoWhatsApp(mensagem);
+        //alert('Compartilhar quote: ' + quote);
+    };
+
+    // Exibe o modal
+    modal.style.display = 'block';
+}
+
+
+
+
+// Função para verificar se o autor está correto e mostrar o quote e o botão de compartilhamento
+function verificarAutor(event) {
+
+     const option = event.currentTarget;
+     
+    // Obtém o texto do elemento clicado
+    const textoLivro = option.querySelector('.titulo_livro').textContent;
+    // Verifica se o texto corresponde a um autor na lista de livros
+    const livroEncontrado = livros.find(livro => livro.titulo === textoLivro);
+
+    // Verifica se o autor do livro encontrado é o autor do dia
+    if (livroEncontrado && livroEncontrado.autor === document.querySelector('.title.autor_do_dia').textContent) {
+        const quote = `Muito bem!  ${livroEncontrado.autor} é o autor deste livro.`;      
+
+        // Aqui você pode adicionar a lógica para compartilhar o quote quando o botão for clicado      
+        
+        abrirModal(quote)
+    }
+}
+
+// Fecha o modal quando o usuário clica no botão fechar
+document.querySelector('.close').addEventListener('click', function() {
+    document.getElementById('modal').style.display = 'none';
+});
+
+// Adiciona um ouvinte de evento de clique a todos os elementos com a classe .option
+document.querySelectorAll('.option').forEach(option => {
+    option.addEventListener('click', verificarAutor);
+});
+
+
+// Função para compartilhar uma mensagem via WhatsApp
+function compartilharNoWhatsApp(mensagem) {
+    // Formate a mensagem para incluir no link
+    const mensagemFormatada = encodeURIComponent(mensagem);
+    
+    // Crie o link de compartilhamento com a mensagem formatada
+    const linkWhatsApp = `https://api.whatsapp.com/send?text=${mensagemFormatada}`;
+
+    // Abra o link no navegador
+    window.open(linkWhatsApp, '_blank');
+}
+
+
+
+
+
+</script>
+
+
+
+</body>
+</html>
+
+

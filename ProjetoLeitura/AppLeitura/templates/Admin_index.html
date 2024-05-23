@@ -120,20 +120,10 @@
 </div>
 </section>
 
-<section id="section-author-selected">
-
-    <h2 id="title-selected">Destaque</h2>
-    <div id="div-author-born">
-     <h3 id="title-author-born"><img src="images/cake2.svg" style="font-size: 2rem; color: cornflowerblue;" alt="Bootstrap" width="32" height="32">  AutorDestaque - ANO</h3>
-
-
- </div>
-
-</section>
-
 
 <section id="section-born-deceased-list">
     <h2 id="title-authors-born">Autores Nascidos</h2>
+    <h6>Selecione o autor que quer destacar</h6>
     <!-- Adicione aqui o código para a lista paginada de autores nascidos -->
     <div id="lista_autores_nascidos"></div>
 </section>
@@ -151,12 +141,14 @@
 /**********LISTA POR DAATA*************/
 
  var autores = [
-        { nome: "Ingmar Bergman", diaNascimento: 1, mesNascimento: 5, anoNascimento: 1990, diaFalecimento: 0, mesFalecimento: 0, anoFalecimento: 0 },
-        { nome: "Pedro Almodóvar", diaNascimento: 5, mesNascimento: 5, anoNascimento: 1985, diaFalecimento: 10, mesFalecimento: 5, anoFalecimento: 2010 },
-        { nome: "Tom Cruise", diaNascimento: 5, mesNascimento: 5, anoNascimento: 1995, diaFalecimento: 0, mesFalecimento: 0, anoFalecimento: 0 },
-        { nome: "Ben Stiler", diaNascimento: 10, mesNascimento: 1, anoNascimento: 1978, diaFalecimento: 15, mesFalecimento: 1, anoFalecimento: 2015 }
-        // Adicione mais autores e seus dias e meses de nascimento conforme necessário
-    ];
+    { nome: "Ingmar Bergman", diaNascimento: 1, mesNascimento: 5, anoNascimento: 1990, diaFalecimento: 0, mesFalecimento: 0, anoFalecimento: 0, destacado: "não" },
+    { nome: "Pedro Almodóvar", diaNascimento: 5, mesNascimento: 5, anoNascimento: 1985, diaFalecimento: 10, mesFalecimento: 5, anoFalecimento: 2010, destacado: "não" },
+    { nome: "Tom Cruise", diaNascimento: 5, mesNascimento: 5, anoNascimento: 1995, diaFalecimento: 0, mesFalecimento: 0, anoFalecimento: 0, destacado: "não" },
+    { nome: "Ben Stiler", diaNascimento: 10, mesNascimento: 1, anoNascimento: 1978, diaFalecimento: 15, mesFalecimento: 1, anoFalecimento: 2015, destacado: "não" }
+    // Adicione mais autores e seus dias e meses de nascimento conforme necessário
+];
+
+console.log(autores);
 
 
     function get_autores(dia, mes, autores) {
@@ -181,7 +173,7 @@
     // Verificar se foram encontrados autores para a data fornecida
     if (autoresNoDiaMes.length > 0) {
         return autoresNoDiaMes.map(function(autor) {
-            return [autor.nome, autor.anoNascimento];
+            return [autor.nome, autor.anoNascimento, autor.destacado];
         });
     } else {
         return [["Nenhum autor encontrado para esta data", "Não há registros"]];
@@ -203,13 +195,24 @@ function diaSelecionado(diaHead, mesHead) {
     // Exibe os resultados
     resultados.forEach(function(resultado) {
         // Cria um novo elemento de lista
-        var novoAutor = document.createElement("li");
+        var novoAutor = document.createElement("h5");
+        var imagemDestaque = document.createElement("img");
+
+        if(resultado[2] =="sim"){
+             imagemDestaque.setAttribute("src", "images/check-mark.png"); 
+        }
         
+
+
         // Define o texto do elemento com base nos resultados
-        novoAutor.textContent = resultado[0] + ", (" +  resultado[1] + ")";
-        
+        novoAutor.textContent = resultado[0] + ", (" +  resultado[1] + ") ";
+        novoAutor.setAttribute("onclick", "destacarAutorPorNome('"+resultado[0]+"')"); 
+
+         
         // Adiciona o novo elemento à lista de autores nascidos
         document.getElementById("lista_autores_nascidos").appendChild(novoAutor);
+
+        novoAutor.appendChild(imagemDestaque); 
 
        //console.log("Nome do autor:", resultado[0]);
         //console.log("Ano de nascimento:", resultado[1]);
@@ -256,6 +259,21 @@ minhaDiv.addEventListener('conteudoModificado', function(event) {
 
 
 
+function destacarAutorPorNome(nomeAutor) {
+    for (var i = 0; i < autores.length; i++) {
+        if (autores[i].nome === nomeAutor) {
+            autores[i].destacado = "sim";
+        } else {
+            autores[i].destacado = "não";
+        }
+    }
+    console.log(autores);
+
+    var diaHead = parseInt(document.querySelector('.head-day').textContent);
+    var mesHead = parseInt(document.querySelector('.mesSelecionado').textContent);
+    // Chama a função diaSelecionado com os valores do dia e do mês como argumentos
+    diaSelecionado(diaHead, mesHead);
+}
 
 
 
